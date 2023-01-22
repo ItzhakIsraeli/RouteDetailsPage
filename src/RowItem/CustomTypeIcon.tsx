@@ -1,5 +1,7 @@
-import {Button, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 import * as React from "react";
+import {StyledButton} from "../StyledComponents/StyledComponents";
+import {Colors} from "../Constant/Colors";
 
 interface CustomTypeIconProps {
     text: string
@@ -8,11 +10,11 @@ interface CustomTypeIconProps {
 export const CustomTypeIcon = ({text}: CustomTypeIconProps) => {
     return (
         <>
-            <Button variant="contained" disabled sx={{height: 25, borderRadius: 0, minWidth:100}}>
-                <Typography color={'white'} fontWeight={'bold'} sx={{color: "#58a7c0"}} variant={'subtitle2'}>
+            <StyledButton variant="contained" disabled sx={{minWidth: 100}}>
+                <Typography color={'white'} fontWeight={'bold'} sx={{color: Colors.TYPE_COLOR}} variant={'subtitle2'}>
                     {text}
                 </Typography>
-            </Button>
+            </StyledButton>
         </>
     )
 }

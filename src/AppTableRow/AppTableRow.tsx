@@ -1,11 +1,12 @@
 import React from "react";
 import {ItemType} from "../Data/Data";
-import {Box, Grid, Typography} from "@mui/material";
+import {Box, Grid} from "@mui/material";
 import {RowItem} from "../RowItem/RowItem";
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import {Colors} from "../Constant/Colors";
 import {FilterContext} from "../Main/Main";
+import {ClickableText} from "../StyledComponents/StyledComponents";
 
 interface RowAppTable {
     dataName: string,
@@ -26,18 +27,13 @@ export const AppTableRow = ({dataName, rowData}: RowAppTable) => {
     return (
         <>
             <Grid container gap={1} paddingTop={2}>
-                <Typography onClick={() => setIsRowOpen(prevState => !prevState)} sx={{
-                    fontWeight: 'bold',
-                    '&:hover': {
-                        cursor: 'pointer'
-                    }
-                }}>
+                <ClickableText onClick={() => setIsRowOpen(prevState => !prevState)}>
                     <Grid container alignItems={'center'} justifyContent={'center'} gap={1}>
                         {isRowOpen ? <ArrowDropDownCircleIcon fontSize={'small'} sx={{color: Colors.PRIMARY_COLOR}}/> :
                             <PlayCircleFilledIcon fontSize={'small'} sx={{color: Colors.PRIMARY_COLOR}}/>}
                         {dataNames[dataName]}
                     </Grid>
-                </Typography>
+                </ClickableText>
             </Grid>
             <Box
                 sx={{
@@ -47,9 +43,9 @@ export const AppTableRow = ({dataName, rowData}: RowAppTable) => {
             >
                 {isRowOpen &&
                     rowData.map((item: ItemType) =>
-                        (item.name.includes(filterContext!.textFilter) ||
-                            item.type.toLowerCase().includes(filterContext!.textFilter.toLowerCase())) &&
-                        <RowItem item={item} key={item.name} piiFilter={filterContext!.piiFilter}/>
+                        (item.name.includes(filterContext.textFilter) ||
+                            item.type.toLowerCase().includes(filterContext.textFilter.toLowerCase())) &&
+                        <RowItem item={item} key={item.name} piiFilter={filterContext.piiFilter}/>
                     )
                 }
             </Box>

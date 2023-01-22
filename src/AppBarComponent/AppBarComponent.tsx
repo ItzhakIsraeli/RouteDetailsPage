@@ -12,14 +12,14 @@ const StyledToolbar = styled(Toolbar)(({theme}) => ({
 
 export const AppBarComponent = ({children}: MainAppBarProps) => {
     return (
-            <AppBar position="static" color={'default'}>
-                <Toolbar>
-                    <StyledToolbar sx={{width:"100%"}}>
-                        <Grid container>
-                            {children}
-                        </Grid>
-                    </StyledToolbar>
-                </Toolbar>
-            </AppBar>
+        <AppBar position="static" color={'default'}>
+            <Toolbar>
+                <StyledToolbar sx={{width: "100%"}}>
+                    <Grid container>
+                        {children}
+                    </Grid>
+                </StyledToolbar>
+            </Toolbar>
+        </AppBar>
     )
 }

@@ -16,15 +16,20 @@ interface FilterContextType {
     textFilter: string
 }
 
+enum TAB_OPTIONS {
+    REQUEST = "req",
+    RESPONSE = "res"
+}
+
 export const FilterContext = React.createContext<FilterContextType>({piiFilter: false, textFilter: ''});
 
 export const Main = () => {
-    const [value, setValue] = React.useState('req');
+    const [tabValue, setTabValue] = React.useState<TAB_OPTIONS>(TAB_OPTIONS.REQUEST);
     const [showPiiFilter, setShowPiiFilter] = React.useState<boolean>(false);
     const [searchFilterText, setSearchFilterText] = React.useState<string>('');
 
-    const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-        setValue(newValue);
+    const handleChange = (event: React.SyntheticEvent, newValue: TAB_OPTIONS) => {
+        setTabValue(newValue);
     };
 
     const handleApply = (searchText: string, piiFilter: boolean) => {
@@ -36,14 +41,14 @@ export const Main = () => {
         <>
             <MainAppBar settingsData={getSettings()}/>
             <Box sx={{width: '100%', typography: 'body1'}}>
-                <TabContext value={value}>
+                <TabContext value={tabValue}>
                     <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                         <TabList onChange={handleChange}
                                  TabIndicatorProps={{style: {backgroundColor: Colors.DEFAULT_COLOR}}} sx={{
                             "& button.Mui-selected": {color: Colors.DEFAULT_COLOR, fontWeight: "bold"}
                         }}>
-                            <Tab label="Request" value="req" sx={{color: Colors.DEFAULT_COLOR}}/>
-                            <Tab label="Response" value="res" sx={{color: Colors.DEFAULT_COLOR}}/>
+                            <Tab label="Request" value={TAB_OPTIONS.REQUEST} sx={{color: Colors.DEFAULT_COLOR}}/>
+                            <Tab label="Response" value={TAB_OPTIONS.RESPONSE} sx={{color: Colors.DEFAULT_COLOR}}/>
                         </TabList>
                     </Box>
                     <AppBarComponent children={
@@ -52,10 +57,10 @@ export const Main = () => {
                         </Grid>
                     }/>
                     <FilterContext.Provider value={{piiFilter: showPiiFilter, textFilter: searchFilterText}}>
-                        <TabPanel value="req">
+                        <TabPanel value={TAB_OPTIONS.REQUEST}>
                             <AppTable data={getRequest()}/>
                         </TabPanel>
-                        <TabPanel value="res">
+                        <TabPanel value={TAB_OPTIONS.RESPONSE}>
                             <AppTable data={getResponse()}/>
                         </TabPanel>
                     </FilterContext.Provider>
